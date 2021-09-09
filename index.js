@@ -83,20 +83,23 @@ function createPie(cx, cy, r, slices) {
   line.setAttributeNS(null, "y2", toCoordY);
   line.setAttributeNS(null, "stroke", "red");
   document.getElementById('pie').appendChild(line);
+};
 
-
-  // transform svg "rotate"
-
-  // rotate the line 10 times in 3 seconds
-  var animate = document.createElementNS("http://www.w3.org/2000/svg", "animateTransform");
-  animate.setAttributeNS(null, "attributeName", "transform");
-  animate.setAttributeNS(null, "attributeType", "XML");
-  animate.setAttributeNS(null, "type", "rotate");
-  animate.setAttributeNS(null, "from", "0 " + cx + " " + cy);
-  animate.setAttributeNS(null, "to", "360 " + cx + " " + cy);
-  animate.setAttributeNS(null, "dur", "1s");
-  document.getElementById('line').appendChild(animate);
-}
+function rotateLineAnimation(deg) {
+  var line = document.getElementById('line');
+  var cx = line.getAttributeNS(null, "x1");
+  var cy = line.getAttributeNS(null, "y1");
+  var r = 50;
+  var toCoordX = line.getAttributeNS(null, "x2");
+  var toCoordY = line.getAttributeNS(null, "y2");
+  var d = 'M' + cx + ',' + cy + ' L' + toCoordX + ',' + toCoordY + ' A' + r + ',' + r + ' 0 0,1 ' + toCoordX + ',' + toCoordY + 'z';
+  line.setAttributeNS(null, "d", d);
+  for (var i = 0; i < deg; i++) {
+    line.setAttributeNS(null, "transform", "rotate(" + i + " " + cx + " " + cy + ")");
+    // wait for 1/10 of a second
+    setTimeout(rotateLineAnimation, 100);
+  };
+};
 
 window.onload = function() {
   updateGraph();
@@ -114,6 +117,8 @@ window.onload = function() {
     // clear svg 
     document.getElementById('pie').innerHTML = "";
     createPie(55, 55, 50, this.value);
+
+    line.innerHTML = "";
 
     updateGraph();
   } 
