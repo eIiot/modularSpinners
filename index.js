@@ -11,7 +11,7 @@ function updateGraph() {
 
   var header = table.appendChild(document.createElement("tr"));
   var headerRow = header.appendChild(document.createElement("td"));
-  headerRow.innerHTML = ``;
+  headerRow.innerHTML = `🖱`;
 
   for (var i = 0; i < modNum; i++) {
     var headerRow = header.appendChild(document.createElement("td"));
@@ -33,6 +33,8 @@ function updateGraph() {
       }
 
       row.appendChild(document.createElement("td")).innerHTML = `<a class="hovernum" onclick="rotateLineAnimation(${(360/modNum)*value})">${value % modNum}</a>`;
+      // add class
+      row.lastChild.classList.add("num");
     };
     rows++;
   };
@@ -90,6 +92,9 @@ function createPie(cx, cy, r, slices) {
 };
 
 function rotateLineAnimation(deg) {
+  // add class "fade-out"
+  document.getElementById('help').classList.add("hidden");
+
   var line = document.getElementById('line');
   var cx = line.getAttributeNS(null, "x1");
   var cy = line.getAttributeNS(null, "y1");
