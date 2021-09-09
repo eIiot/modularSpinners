@@ -109,12 +109,13 @@ function rotateLineAnimation(deg) {
 };
 
 window.onload = function() {
-  var output = document.getElementById("output");
   var slider = document.getElementById("slider");
+  var output = document.getElementById("output");
+  var select = document.getElementById("typeSelect");
 
   modNum = slider.value;
 
-  if (output.value == 1) {
+  if (select.value == 1) {
     modType = "+";
   } else {
     modType = "*";
@@ -123,10 +124,6 @@ window.onload = function() {
 
   updateGraph();
   createPie(55, 55, 50, modNum);
-
-  var slider = document.getElementById("slider");
-  var output = document.getElementById("output");
-  var select = document.getElementById("typeSelect");
 
   output.innerHTML = slider.value;
 
