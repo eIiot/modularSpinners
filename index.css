@@ -12,6 +12,7 @@ table {
   border-width: 5px;
   border-color: #000;
   border-spacing: 1em;
+  text-align: right;
 }
 
 svg {
@@ -22,4 +23,8 @@ svg {
 path {
   fill: transparent;
   stroke: black;
+}
+
+.hovernum {
+  cursor: pointer;
 }

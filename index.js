@@ -1,18 +1,17 @@
 //  Create a modular table for the id "table"
 
-var modNum = 5;
-var modType = "*";
-
-var output = document.getElementById("output");
+// get values from slider
 
 function updateGraph() {
   var table = document.getElementById("table");
+  var tableTitle = document.getElementById("table-title");
 
   table.innerHTML = "";
+  tableTitle.innerHTML = `<h2>mod ${modNum} (${modType})<h2>`;
 
   var header = table.appendChild(document.createElement("tr"));
   var headerRow = header.appendChild(document.createElement("td"));
-  headerRow.innerHTML = "Table";
+  headerRow.innerHTML = ``;
 
   for (var i = 0; i < modNum; i++) {
     var headerRow = header.appendChild(document.createElement("td"));
@@ -33,7 +32,7 @@ function updateGraph() {
         var value = j * rows;
       }
 
-      row.appendChild(document.createElement("td")).innerHTML = value % modNum;
+      row.appendChild(document.createElement("td")).innerHTML = `<a class="hovernum" onclick="rotateLineAnimation(${(360/modNum)*value})">${value % modNum}</a>`;
     };
     rows++;
   };
@@ -72,6 +71,7 @@ function createPie(cx, cy, r, slices) {
     // add white highlight to the text
     text.innerHTML = i;
     document.getElementById('pie').appendChild(text);
+
   };
 
   line = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -82,7 +82,11 @@ function createPie(cx, cy, r, slices) {
   line.setAttributeNS(null, "x2", toCoordX);
   line.setAttributeNS(null, "y2", toCoordY);
   line.setAttributeNS(null, "stroke", "red");
+  // rotate the line to (360/slices)/2 degrees
+  line.setAttributeNS(null, "transform", "rotate(" + ((360/slices)/2) + " " + cx + " " + cy + ")");
   document.getElementById('pie').appendChild(line);
+
+  // rotate the pie around cx, cy
 };
 
 function rotateLineAnimation(deg) {
@@ -94,14 +98,29 @@ function rotateLineAnimation(deg) {
   var toCoordY = line.getAttributeNS(null, "y2");
   var d = 'M' + cx + ',' + cy + ' L' + toCoordX + ',' + toCoordY + ' A' + r + ',' + r + ' 0 0,1 ' + toCoordX + ',' + toCoordY + 'z';
   line.setAttributeNS(null, "d", d);
-  for (var i = 0; i < deg; i++) {
-    line.setAttributeNS(null, "transform", "rotate(" + i + " " + cx + " " + cy + ")");
-    // wait for 1/10 of a second
-    setTimeout(rotateLineAnimation, 100);
+  line.setAttributeNS(null, "transform", "rotate(" + ((360/modNum)/2) + " " + cx + " " + cy + ")");
+  var angle = ((360/modNum)/2);
+  var finalAngle = deg + ((360/modNum)/2);
+  function rotate() {
+    line.setAttributeNS(null, "transform", "rotate(" + (angle++) + " " + cx + " " + cy + ")");
+    (angle < finalAngle) && requestAnimationFrame(rotate); // +- 60 fps
   };
+  rotate();
 };
 
 window.onload = function() {
+  var output = document.getElementById("output");
+  var slider = document.getElementById("slider");
+
+  modNum = slider.value;
+
+  if (output.value == 1) {
+    modType = "+";
+  } else {
+    modType = "*";
+  };
+
+
   updateGraph();
   createPie(55, 55, 50, modNum);
 
