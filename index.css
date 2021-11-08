@@ -1,7 +1,9 @@
 body {
-  font-family: 'Urbanist', sans-serif;
-  font-weight: light;
+  background-color: #f5f5f5;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
   text-align: center;
+  color: #333333;
 }
 
 .container {
@@ -61,4 +63,12 @@ path {
 
 .hidden {
   display: none;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: baseline;
+  text-align: center;
 }

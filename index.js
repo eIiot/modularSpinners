@@ -93,8 +93,6 @@ function createPie(cx, cy, r, slices) {
 
 function rotateLineAnimation(deg) {
   // add class "fade-out"
-  document.getElementById('help').classList.add("hidden");
-
   var line = document.getElementById('line');
   var cx = line.getAttributeNS(null, "x1");
   var cy = line.getAttributeNS(null, "y1");
